@@ -1,0 +1,68 @@
+---
+title: "Developer Job & Experience Analysis between north Amercia region and Asian country"
+author: "Zichen Tian"
+format: html
+editor: visual
+---
+
+
+## Developer Country & Salary Comparison between north America region and Asian country
+
+The below boxplot below compares developer salaries in four different countries (the United States, Canada, Hong Kong, and Japan) It shows the differences in median salaries, range of the salary, and outliers, which share a clear reference on how salary will set between US and Asian countries
+
+```{r}
+library(ggplot2)
+Semir_job <- readRDS("Semir_job.rds")
+```
+
+
+```{r}
+ggplot(Semir_job, aes(x=country, y = salary_k)) + geom_boxplot() + 
+  labs(
+    title = "Country & Salary comparsion between north America region and Asian countries",
+    x = "Country",
+    y = "Salary USD"
+  ) 
+```
+
+```{r}
+aggregate(salary_k ~ country, data = Semir_job, FUN = median)
+```
+
+
+## Remote work Comparison between US and Asian country
+
+The below Stocked bar chart compares the working arrangement in four different countries (the United States, Canada, Hong Kong, and Japan) It compare the working style how each country like, some may prefer onsite, and some might be hybird or remote
+
+```{r}
+ggplot(Semir_job, aes(x = country, fill = remote_work)) + geom_bar(position = "fill") +
+  labs(
+    title = "Remote Work Comparsion",
+    x = "Country",
+    y = "Percent of Remote Work",
+    fill = "Work Arrangement"
+  )
+```
+
+```{r}
+prop.table(table(Semir_job$country, Semir_job$remote_work), 1)
+```
+## What I found and why it matter
+I found that the United States has the highest mean and median salary (145,000USD), while the other three countries show relatively similar salary distributions in the boxplot. However, Hong Kong has the lowest median salary (56,320USD) among the four countries. Additionally, a large proportion of developers in Hong Kong work in person (68%), while fewer than 20% of developers in each of the other three countries work in person. This matters because it helps people compare career opportunities in the United States and Asian countries by considering factors such as salary, living expenses, and working arrangements.
+
+## How I know and what it does not tell us
+The above analysis is based on the record from 2024 developer working survey, which help me to understand the differences in working styles across countries. The first boxplot shows the salary ranges across different countries and uses median salaries to provide a better comparison of earnings. The second stacked bar chart compares the proportions of different working arrangements, such as the percentage of developers who choose to work remotely or in person.
+
+There are two limitations to this analysis.
+
+First, living expenses: Although some countries offer relatively high salaries, living expenses are another important factor that affects job satisfaction and quality of life. They also influence how much money workers have left for their daily needs, personal expenses, or entertainment.
+
+Second, sample size: Although I believe the data meet most of the research requirements, the sample sizes outside the United States are relatively small, which may cause bias or inaccuracies in the results.
+
+
+## Credit
+**Name**: Zichen Tian(Semir)
+
+**LinkedIn link**:[Zichen Tian](https://www.linkedin.com/in/zichen-tian-627043223)
+
+**Data**: Stack Overflow 2024 Developer Survey (ODbL). Project for DSAN 5100, Georgetown University M.S. in Data Science & Analytics.
